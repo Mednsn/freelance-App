@@ -3,13 +3,14 @@
 namespace App\Http\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Http\Requests\StoreUserRequiste;
 use App\Models\Client;
 use App\Models\Freelance;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
-
 
 class AuthentificationApi extends Controller
 {
@@ -38,7 +39,7 @@ class AuthentificationApi extends Controller
             'statut' => "active",
             'role_id' => $role_id,
         ]);
-   
+
 
         if ($validated['role'] === "client") {
             Client::created([
@@ -54,9 +55,6 @@ class AuthentificationApi extends Controller
                 'user_id' => $user->id
             ]);
         }
-
-
-
         $token = $user->createToken('token_api')->plainTextToken;
 
         return response()->json([
@@ -64,5 +62,37 @@ class AuthentificationApi extends Controller
             'message' => 'user est ajouter avec success',
             'data' => ['user' => $user, 'token' => $token]
         ]);
+    }
+
+    public function login(LoginRequest $request)
+    {
+        $validated = $request->validated();
+
+        if (!Auth::attempt($validated)) {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Email ou mot de passe incorrect'
+            ], 401);
+        }
+        $user = Auth::user();
+
+        $token = $user->createToken('token_ipa')->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Login success',
+            'data' => ['token' => $token, 'user' => $user]
+        ]);
+    }
+
+    public function logout(Request $request) 
+    {
+        $request->user()->tokens()->delete();
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'you are logout now '
+        ], 200);
     }
 }
