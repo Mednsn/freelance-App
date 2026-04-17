@@ -7,11 +7,12 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -19,9 +20,12 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'firstname',
+        'lastname',
         'email',
         'password',
+        'statut',
+        'role_id',
     ];
 
     /**
@@ -58,9 +62,24 @@ class User extends Authenticatable
      {
         return $this->hasMany(Candidature::class);
      }
-     public function commentaires()
-     {
-        return $this->hasMany(Commentaire::class);
-     }
+     public function freelance()
+    {
+        return $this->hasOne(Freelance::class);
+    }
+    public function client()
+    {
+        return $this->hasOne(Client::class);
+    }
+
+    public function sendMessages()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
+
+    public function recevedMessages()
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
+    }
+    
 
 }

@@ -16,8 +16,9 @@ class Mission extends Model
     {
         return $this->belongsTo(Client::class);
     }
-    public function techRequises()
+    public function technologies()
     {
-        return $this->hasMany(TechRequiste::class);
+        return $this->hasMany(Technologie::class);
     }
+    
 }

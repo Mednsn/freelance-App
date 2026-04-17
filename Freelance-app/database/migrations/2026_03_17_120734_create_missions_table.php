@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('titre');
             $table->text('description');
             $table->float('budget');
-            $table->integer('buree_by_day');
-            $table->string('type');/*  web/mobile/desktop */
-            $table->string('statut');/* Ouverte, En cours, Terminée, Annulée */
+            $table->integer('duree_by_day');
+            $table->enum('type',['web','mobile','desktop'])->default('web');
+            $table->enum('statut',['Ouverte','En cours','Terminee','Annulee'])->default('Ouverte');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();

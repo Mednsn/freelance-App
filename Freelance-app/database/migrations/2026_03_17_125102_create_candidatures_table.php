@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('candidatures', function (Blueprint $table) {
             $table->id();
             $table->string('lettre');
-            $table->string('statut');/* accepte, refuse , en attente */
+            $table->enum('statut',['accepte','refuse','en attente'])->default('en attente');
             $table->float('tarif');
             $table->foreignId('freelance_id')->constrained()->onDelete('cascade');
-            $table->foreignId('mession_id')->constrained()->onDelete('cascade');
+            $table->foreignId('mission_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -12,4 +12,8 @@ class Technologie extends Model
     {
         return $this->belongsTo(Freelance::class);
     }
+    public function mission()
+    {
+        return $this->belongsTo(Mission::class);
+    }
 }

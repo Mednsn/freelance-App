@@ -12,7 +12,7 @@ class StoreUserRequiste extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,11 +23,20 @@ class StoreUserRequiste extends FormRequest
     public function rules(): array
     {
         return [
-            'firstname' => 'required | string | max:100',
-            'lastname' => 'required | string | max:100',
-            'email' => 'required | email | unique:users',
-            'password' => 'required',
-            'role' => 'required | numiric',
+            'firstname'   => 'required | string | max:100',
+            'lastname'    => 'required | string | max:100',
+            'email'       => 'required | email | unique:users,email',
+            'password'    => 'required | min:10',
+            'role'        => 'required | string | in:client,freelance',
+
+
+
+            'tarif'          => 'required_if:role,freelance|float',
+            'portfolio'      => 'required_if:role,freelance|string',
+            'disponibilite'  => 'required_if:role,freelance|bool',
+
+            'description' => 'required_if:role,client',
+            'entreprise'  =>  'required_if:role,client|string',
         ];
     }
 }

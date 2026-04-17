@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Admin extends User
+class Admin extends Model
 {
-    protected $fillable = ['active'];
+    protected $fillable = ['active','user_id'];
 
     public function users()
     {

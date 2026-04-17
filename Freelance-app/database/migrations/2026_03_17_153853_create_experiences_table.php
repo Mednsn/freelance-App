@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('experiences', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('title');
+            $table->integer('years');
+            $table->string('company');
             $table->text('description');
             $table->foreignId('freelance_id')->constrained()->onDelete('cascade');
             $table->timestamps();

@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('commente');
             $table->integer('evaluation');
-            $table->foreignId('client_id')->constrained()->onDelete('cascade');
+            $table->foreignId('from_user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('to_user_id')->constrained()->onDelete('cascade');
             $table->foreignId('mission_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Experience extends Model
 {
-    protected $fillable = ['name','description','freelance_id'];
+    protected $fillable = ['title','description','freelance_id','years','company'];
     
     public function freelances()
     {

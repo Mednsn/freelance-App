@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('freelances', function (Blueprint $table) {
-            $table->integer('id');
+            $table->id();
             $table->float('tarif');
             $table->string('portfolio');
             $table->boolean('disponibilite');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
